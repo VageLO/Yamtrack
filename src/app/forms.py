@@ -318,7 +318,7 @@ class TvForm(MediaForm):
         """Bind form to model."""
 
         model = TV
-        fields = ["score", "status", "notes"]
+        fields = ["score", "status", "notes", "custom_url"]
 
 
 class SeasonForm(MediaForm):
