@@ -12,7 +12,7 @@
   {# Top section #}
   <script>
   function requestMedia(episode) {
-      const title = '{{media.title}}'
+      const title = '{{media.title|escapejs}}'
       const year = new Date('{{tv.details.first_air_date}}').getFullYear();
       const season = {{media.season_number}}
       const data = {
