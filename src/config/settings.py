@@ -209,6 +209,9 @@ else:
         },
     }
 
+# N8N
+N8N_URL = config("N8N_URL", default=None)
+
 # Cache
 # https://docs.djangoproject.com/en/stable/topics/cache/
 CACHE_TIMEOUT = 86400  # 24 hours

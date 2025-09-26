@@ -10,6 +10,35 @@
 
 {% block content %}
   {# Top section #}
+  <script>
+  function requestMedia(episode) {
+      const title = '{{media.title}}'
+      const year = new Date('{{tv.details.first_air_date}}').getFullYear();
+      const season = {{media.season_number}}
+      const data = {
+        title,
+        year,
+        season,
+        episode
+      }
+      const csrfToken = "{{ csrf_token }}";
+
+      fetch("{% url 'request_media' %}", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrfToken
+          },
+          body: JSON.stringify(data)
+      })
+          .then(response => response.json())
+          .then(data => {
+              alert(data.message);
+              //window.location.reload();
+          })
+          .catch(error => console.error("Error:", error));
+  }
+  </script>
   <div class="flex flex-col md:flex-row gap-8 md:gap-10 mb-12 md:mb-8">
     <div class="w-full md:w-1/4 max-w-[250px] mx-auto md:mx-0">
       <img alt="{{ media.title }}"
@@ -500,6 +529,8 @@
                         </p>
                       </div>
                       <div class="flex space-x-2">
+                        {# Jellyfin #}
+                        <a href="javascript:void(0)" onclick="requestMedia({{episode.episode_number}})">Jellyfin</a>
                         {# Track Episode #}
                         <div x-data="{ trackOpen: false }">
                           <button @click="trackOpen = true"

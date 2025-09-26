@@ -1,3 +1,4 @@
+import json
 import logging
 from pathlib import Path
 
@@ -18,6 +19,7 @@ from django.views.decorators.http import require_GET, require_http_methods, requ
 
 from app import config, helpers, history_processor
 from app import statistics as stats
+from app.providers.write_to_media import write_media
 from app.forms import EpisodeForm, ManualItemForm, get_form_class
 from app.models import TV, BasicMedia, Item, MediaTypes, Season, Sources, Status
 from app.providers import manual, services, tmdb
@@ -553,6 +555,17 @@ def media_delete(request):
 
     return helpers.redirect_back(request)
 
+@require_POST
+def request_media(request):
+    """Return the details page for a media item."""
+    data = json.loads(request.body)
+    title = data.get("title")
+    year = data.get("year")
+    season = data.get("season")
+    episode = data.get("episode")
+
+    message = write_media(title=title, year=year, season=season, episode=episode)
+    return JsonResponse({"message": message})
 
 @require_POST
 def episode_save(request):
