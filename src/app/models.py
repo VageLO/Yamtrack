@@ -860,8 +860,6 @@ class BasicMedia(Media):
 class TV(Media):
     """Model for TV shows."""
 
-    custom_url = models.URLField(default="")
-
     tracker = FieldTracker()
 
     class Meta:

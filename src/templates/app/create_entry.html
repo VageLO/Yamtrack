@@ -14,12 +14,6 @@
     {# djlint:off #}
     <form method="post" class="space-y-6" x-data="{
       mediaType: 'tv',
-      placeholderHtml: null,
-
-      init() {
-        // Store the initial placeholder HTML
-        this.placeholderHtml = document.getElementById('image-preview').innerHTML;
-      },
 
       updateImagePreview(input) {
         const previewDiv = document.getElementById('image-preview');
@@ -47,29 +41,29 @@
           previewDiv.innerHTML = this.placeholderHtml;
         }
       },
-    
+
       showField(field) {
         // TV Show fields
         if (this.mediaType === 'tv') {
-          return ['title', 'image', 'score', 'status', 'notes', 'custom_url'].includes(field);
+          return ['title', 'image', 'score', 'status', 'notes'].includes(field);
         }
-    
+
         // Season fields
         else if (this.mediaType === 'season') {
           return ['parentShow', 'image', 'seasonNumber', 'score', 'status', 'notes'].includes(field);
         }
-    
+
         // Episode fields
         else if (this.mediaType === 'episode') {
           return ['parentSeason', 'image', 'episodeNumber', 'endDate'].includes(field);
         }
-    
+
         // Movie, Anime, Manga, Game, Book fields
         else {
           return ['title', 'image', 'score', 'progress', 'status', 'startDate', 'endDate', 'notes'].includes(field);
         }
       },
-    
+
       getProgressLabel() {
         if (this.mediaType === 'anime') return 'Progress (Episodes)';
         if (this.mediaType === 'manga') return 'Progress (Chapters)';
@@ -77,7 +71,7 @@
         if (this.mediaType === 'book') return 'Progress (Pages)';
         return 'Progress';
       },
-    
+
       validateForm() {
         // Validate parent TV selection for Season
         if (this.mediaType === 'season') {
@@ -87,7 +81,7 @@
             return false;
           }
         }
-    
+
         // Validate parent Season selection for Episode
         if (this.mediaType === 'episode') {
           const parentSeasonId = document.getElementById('parent-season-id').value;
@@ -96,7 +90,7 @@
             return false;
           }
         }
-    
+
         return true;
       }
     }" @submit.prevent="validateForm() && $event.target.submit()">
@@ -244,20 +238,6 @@
             <!-- Hidden error icon template -->
             <div id="error-icon" class="hidden">
               {% include "app/icons/circle-x.svg" with classes="w-8 h-8 text-red-500" %}
-            </div>
-          </div>
-        </div>
-
-        <!-- Custom URL field (All types) -->
-        <div x-show="showField('custom_url')">
-          <label class="block text-sm font-medium mb-2 text-gray-300">Link on Kinopub.me</label>
-          <div class="flex gap-4">
-            <div class="flex-1">
-              <input class="w-full p-2 bg-[#39404b] rounded-md text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#4a9eff] appearance-none"
-                     name="custom_url"
-                     placeholder="Enter kinopub.me URL"
-                     type="url"
-                     value="">
             </div>
           </div>
         </div>
