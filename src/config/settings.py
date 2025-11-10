@@ -212,6 +212,10 @@ else:
 # N8N
 N8N_URL = config("N8N_URL", default=None)
 
+# Jellyfin
+JELLY_TOKEN = config("JELLY_TOKEN", default=None)
+JELLY_URL = config("JELLY_URL", default=None)
+
 # Cache
 # https://docs.djangoproject.com/en/stable/topics/cache/
 CACHE_TIMEOUT = 86400  # 24 hours

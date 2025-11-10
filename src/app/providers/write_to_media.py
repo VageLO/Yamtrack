@@ -350,4 +350,17 @@ def write_media(
         episode=episode,
         download=download,
     )
+
+    # Scan Jellyfin library
+    url = settings.JELLY_URL
+    headers = {
+        "Authorization": f"MediaBrowser Token={settings.JELLY_TOKEN}",
+    }
+    response = requests.post(url, headers)
+
+    if response.ok:
+        logger.info(f"Scanning Jellyfin library: {url}")
+    else:
+        logger.error(f"Jellyfin status code: {response.status_code}")
+
     return f"Loaded {size} MB"
