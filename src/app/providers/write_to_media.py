@@ -356,7 +356,7 @@ def write_media(
     headers = {
         "Authorization": f"MediaBrowser Token={settings.JELLY_TOKEN}",
     }
-    response = requests.post(url, headers)
+    response = requests.post(url=url, headers=headers)
 
     if response.ok:
         logger.info(f"Scanning Jellyfin library: {url}")
