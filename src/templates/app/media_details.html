@@ -585,6 +585,14 @@
                           </p>
                         </div>
                         <div class="flex space-x-2">
+                          {# Jellyfin #}
+                          <div>
+                            <button @click="requestMedia({{episode.episode_number}})"
+                                    title="Import episode to Jellyfin"
+                                    class="p-2 bg-violet-600 hover:bg-violet-700 text-white rounded-full transition duration-300 cursor-pointer">
+                                {% include "app/icons/jellyfin.svg" with classes="w-4 h-4" %}
+                            </button>
+                          </div>
                           {# Track Episode #}
                           <div x-data="{ trackOpen: false }">
                             <button @click="trackOpen = true"
