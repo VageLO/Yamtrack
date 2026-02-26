@@ -11,16 +11,8 @@
 {% block content %}
   {# Top section #}
   <script>
-  function requestMedia(episode) {
-      const title = '{{media.title|escapejs}}'
-      const year = new Date('{{tv.details.first_air_date}}').getFullYear();
-      const season = {{media.season_number}}
-      const data = {
-        title,
-        year,
-        season,
-        episode
-      }
+  function requestMedia(data) {
+      data["year"] = new Date(`${data["year"]}`).getFullYear();
       const csrfToken = "{{ csrf_token }}";
 
       fetch("{% url 'request_media' %}", {
@@ -587,7 +579,7 @@
                         <div class="flex space-x-2">
                           {# Jellyfin #}
                           <div>
-                            <button @click="requestMedia({{episode.episode_number}})"
+                            <button @click="requestMedia({'episode': {{episode.episode_number}},'title': '{{media.title|escapejs}}', 'year': '{{tv.details.first_air_date}}', 'season': {{media.season_number}},})"
                                     title="Import episode to Jellyfin"
                                     class="p-2 bg-violet-600 hover:bg-violet-700 text-white rounded-full transition duration-300 cursor-pointer">
                                 {% include "app/icons/jellyfin.svg" with classes="w-4 h-4" %}
