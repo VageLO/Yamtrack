@@ -329,15 +329,10 @@ def write_media(
 ) -> str:
     payload = build_payload(title, year, episode, season)
 
-    i = 0
-    while i < 5:
-        urls, subs, error = post_to_webhook(settings.N8N_URL, payload)
-        if error != "No url's found":
-            break
-        i += 1
-
-    if i == 5:
-        return "Try again"
+    urls, subs, error = post_to_webhook(settings.N8N_URL, payload)
+    if error:
+        logger.error(f"N8N returned: {error}")
+        return error
 
     largest_url, size = find_largest_file(urls)
 
