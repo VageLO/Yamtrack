@@ -30,7 +30,7 @@ def post_to_webhook(
     url: str, payload: Dict[str, Any]
 ) -> (List[str], Optional[Dict[str, str]], str):
     try:
-        response = requests.post(url, json=payload, timeout=10)
+        response = requests.post(url, json=payload, timeout=(10, 60))
         response.raise_for_status()
         response = response.json()
 
